@@ -1,0 +1,38 @@
+syntax="proto2";
+
+package msg;
+
+// msgid
+enum EMsg {
+	ID_SCSysBusy = 2;
+	
+	ID_CSLogin = 1001;
+	ID_SCLogin = 1002;
+	
+	ID_CSEnterWorld = 2001;
+	ID_SCEnterWorld = 2002;
+}
+
+//
+message SCSysBusy {
+	optional string gateway             = 99[default="to=client"];
+	required int32 SrvType = 1;
+}
+
+// 
+message CSLogin {
+	optional string gateway             = 99[default="to=logon"];
+}
+
+message SCLogin {
+	optional string gateway             = 99[default="to=client|accId="];
+}
+
+//
+message CSEnterWorld {
+	optional string gateway             = 99[default="to=user|url=auto"];
+}
+
+message SCEnterWorld {
+	optional string gateway             = 99[default="to=client|url=set"];
+}

@@ -19,6 +19,12 @@ message SCSysBusy {
 	required int32 SrvType = 1;
 }
 
+//
+message SCKick {
+	optional string gateway             = 99[default="to=kick"];
+	optional int32 code = 1;
+}
+
 // 
 message CSLogin {
 	optional string gateway             = 99[default="to=logon"];

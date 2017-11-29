@@ -10,6 +10,7 @@ import (
 	"core/net"
 	"core/net/dispatcher/pb"
 	"core/net/lan"
+	"core/net/lan/pipe"
 
 	"share/msg"
 )
@@ -18,7 +19,7 @@ var _ = logs.Debug
 
 //
 var (
-	g_lan    *lan.Lan
+	g_lan    *pipe.Lan
 	g_chMsg  chan *pb.PbFrame
 	g_handle func(*pb.PbFrame)
 )
@@ -29,7 +30,7 @@ const x_chanMsg_cacheNum = 1000 // chan中缓存数据量
 // 服务器间相关处理
 func InitLans(lanCfg *lan.LanCfg, etcdCfg *etcd.SrvCfg, handle func(*pb.PbFrame)) {
 	// init
-	g_lan = lan.NewLan(lanCfg)
+	g_lan = pipe.NewLan(lanCfg)
 	g_chMsg = make(chan *pb.PbFrame, x_chanMsg_cacheNum)
 	g_handle = handle
 

@@ -1,4 +1,4 @@
-package share
+package handler
 
 import (
 	"util/logs"
@@ -6,8 +6,6 @@ import (
 	"core/net/msg/protobuf"
 
 	cmsg "core/net/msg"
-
-	"share/msg"
 )
 
 var _ = logs.Debug
@@ -23,7 +21,7 @@ func ParseMsgData(buf []byte, out interface{}) error {
 	return g_msgParser.Unmarshal(buf, out)
 }
 
-func PackMsg(msgId msg.EMsg, in interface{}) ([]byte, error) {
+func PackMsg(msgId int32, in interface{}) ([]byte, error) {
 	b1, b2, e := g_msgParser.Marshal(uint32(msgId), in)
 	if e != nil {
 		return nil, e

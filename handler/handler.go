@@ -1,14 +1,9 @@
 // 消息处理注册管理
-package share
+package handler
 
 //
 import (
-	"util/logs"
-
-	"core/net/dispatcher/pb"
 	"core/net/socket"
-
-	"share/msg"
 )
 
 // 注册信息封装
@@ -47,38 +42,4 @@ func (this *MsgHandler) Handler(msgId int32) (socket.IHandler, *HandleInfo, bool
 	}
 
 	return nil, nil, false
-}
-
-//
-type hfunc func(*pb.PbFrame)
-
-func (this hfunc) Handle(receiver interface{}, buf []byte) {
-	this(receiver.(*pb.PbFrame))
-}
-
-//
-var g_msgHandlers = NewMsgHandler()
-
-//
-func RegFunc(msgId msg.EMsg, h func(*pb.PbFrame)) {
-	g_msgHandlers.RegHandler(int32(msgId), hfunc(h))
-}
-
-//
-func HandleMsg(f *pb.PbFrame) {
-	//
-	id, ok := ParseMsgId(f.MsgRaw)
-	if !ok {
-		logs.Warnln("parse msg id failed!")
-		return
-	}
-
-	h, info, ok := g_msgHandlers.Handler(id)
-	if !ok {
-		logs.Warn("not found msg handler! fromUrl:%v, msgId:%v", *f.SrcUrl, id)
-		return
-	}
-
-	info.AddStats()
-	h.Handle(f, nil)
 }

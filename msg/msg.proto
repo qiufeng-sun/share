@@ -36,7 +36,7 @@ message SCLogin {
 
 //
 message CSEnterWorld {
-	optional string gateway             = 99[default="to=user|url=auto"];
+	optional string gateway             = 99[default="to=world|url=auto"];
 }
 
 message SCEnterWorld {

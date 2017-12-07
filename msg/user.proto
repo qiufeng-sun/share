@@ -1,0 +1,20 @@
+syntax="proto2";
+
+package msg;
+
+// msgid
+enum EUserMsg {
+	ID_SysBusy = 2;
+	
+	ID_LoadUser = 1001;
+}
+
+//
+message LoadUserReq {
+    required int64 user_id = 1;
+}
+
+message LoadUserResp {
+    required int64 user_id = 1;
+    required string user_name = 2;
+}

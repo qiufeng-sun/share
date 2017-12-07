@@ -1,4 +1,4 @@
-package share
+package pipe
 
 import (
 	"github.com/golang/protobuf/proto"
@@ -12,6 +12,7 @@ import (
 	"core/net/lan"
 	"core/net/lan/pipe"
 
+	"share/handler"
 	"share/msg"
 )
 
@@ -28,7 +29,7 @@ const x_chanMsg_procNum = 10    // 处理goroutine数
 const x_chanMsg_cacheNum = 1000 // chan中缓存数据量
 
 // 服务器间相关处理
-func InitLans(lanCfg *lan.LanCfg, etcdCfg *etcd.SrvCfg, handle func(*pb.PbFrame)) {
+func Init(lanCfg *lan.LanCfg, etcdCfg *etcd.SrvCfg, handle func(*pb.PbFrame)) {
 	// init
 	g_lan = pipe.NewLan(lanCfg)
 	g_chMsg = make(chan *pb.PbFrame, x_chanMsg_cacheNum)
@@ -83,7 +84,7 @@ func NoticeTooBusy(f *pb.PbFrame) {
 //
 func SendMsg(accId int64, srcUrl, dstUrl string, msgId msg.EMsg, m proto.Message) {
 	//
-	raw, e := PackMsg(msgId, m)
+	raw, e := handler.PackMsg(int32(msgId), m)
 	if e != nil {
 		logs.Error("pack msg failed! srcUrl:%v, dstUrl:%v, accId:%v, msgId:%v, msg:%+v",
 			srcUrl, dstUrl, accId, msgId, m)

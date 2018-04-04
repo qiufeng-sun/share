@@ -1,44 +1,159 @@
 syntax="proto2";
 
+import "info.proto";
 package msg;
 
-// msgid
+// msgid(1000以内为服务器内部消息)
 enum EMsg {
-	ID_SCSysBusy = 2;
+	ID_SCSysBusy = 1002;
+	ID_SCKick = 1004;
 	
-	ID_CSLogin = 1001;
-	ID_SCLogin = 1002;
+	ID_CSLogin = 1101;
+	ID_SCLogin = 1102;
 	
-	ID_CSEnterWorld = 2001;
-	ID_SCEnterWorld = 2002;
+	ID_CSLoadInfo = 1201;
+	ID_SCLoadInfo = 1202;
+	
+	ID_CSMatchDz = 2011;
+	ID_SCMatchDz = 2012;
+	ID_SCDealDz = 2014;
+	ID_CSBidDz = 2015;
+	ID_SCBidDz = 2016;
+	ID_SCExtraCardsDz = 2018;
+	ID_CSDiscardDz = 2021;
+	ID_SCDiscardDz = 2022;
+	ID_SCGameOverDz = 2024;
+	ID_CSQuitAutoDz = 2025;
+	ID_SCAutoDz = 2026;
+	ID_SCFullDataDz = 2028;
 }
 
 //
 message SCSysBusy {
-	optional string gateway             = 99[default="to=client"];
-	required int32 SrvType = 1;
+	optional string gateway             = 1[default="to=client"];
+	required int32 srvType = 2;
 }
 
 //
 message SCKick {
-	optional string gateway             = 99[default="to=kick"];
-	optional int32 code = 1;
+	optional string gateway             = 1[default="to=kick"];
+	optional int32 code = 2;
 }
 
 // 
 message CSLogin {
-	optional string gateway             = 99[default="to=logon"];
+	optional string gateway             = 1[default="to=logon"];
+	optional int32 type = 2; // 登录类型
+	optional string token = 3;
 }
 
 message SCLogin {
-	optional string gateway             = 99[default="to=client|accId="];
+	optional string gateway             = 1[default="to=client|accId=set"];
 }
 
+// 拉取玩家信息及大厅信息// to do
+message CSLoadInfo {
+	optional string gateway             = 1[default="to=hall"];
+}
+
+message SCLoadInfo {
+	optional string gateway             = 1[default="to=client"];
+	optional UserInfo userInfo = 2;
+}
+
+// 匹配
+message CSMatchDz {
+	optional string gateway             = 1[default="to=doudz-hall|url=rand"];
+	required int32 roomId = 2; // 房间号(配置中定义匹配方式1=测试用)
+}
+
+message SCMatchDz {
+	optional string gateway             = 1[default="to=client|url=set"];
+	repeated BattleUser users = 2; //
+	required int32 index = 3; // 当前所在位置索引(从0开始)
+	required int32 baseCurrency = 4; // 底分
+	required int32 roomId = 5;
+}
+
+// 发牌
+message SCDealDz {
+	optional string gateway             = 1[default="to=client"];
+	repeated Card cards = 2; // 17张
+	required int32 index = 3; // 谁开始叫地主
+}
+
+// 叫地主(抢地主)
+message CSBidDz {
+	optional string gateway             = 1[default="to=doudz-room|url=fix"];
+	required int32 times = 2; // 倍数(0=不叫)
+}
+
+message SCBidDz {
+	optional string gateway             = 1[default="to=client"];
+	required int32 index = 2; // 谁叫的
+	required int32 times = 3; // 倍数(0=不叫)
+	optional int32 next = 4[default=-1]; // 下一个谁叫地主(-1表示都叫过了)
+}
+
+// 亮底牌
+message SCExtraCardsDz {
+	optional string gateway             = 1[default="to=client"];
+	repeated Card cards = 2; // 底牌(3张)
+	required int32 index = 3; // 谁叫的地主(底牌归属)
+	required int32 times = 4; // 倍数
+}
+
+// 打牌
+message CSDiscardDz {
+	optional string gateway             = 1[default="to=doudz-room|url=fix"];
+	repeated Card cards = 2;
+}
+
+message SCDiscardDz {
+	optional string gateway             = 1[default="to=client"];
+	repeated Card cards = 2;
+	required int32 index = 3; // 谁打的
+}
+
+// 结算//??
+message SCGameOverDz {
+	optional string gateway             = 1[default="to=client|url=del"];
+	required int32 winIndex = 2;
+	
+}
+
+// 取消托管
+message CSQuitAutoDz {
+	optional string gateway             = 1[default="to=doudz-room|url=fix"];
+}
+
+message SCAutoDz {
+	optional string gateway             = 1[default="to=client"];
+	optional bool auto = 2; // 是否自动打牌(托管)
+	optional int32 index = 3; // 谁托管状态变化了(索引)
+}
+
+// 断线重连
+message SCFullDataDz {
+	optional string gateway             = 1[default="to=client|url=set"];
+	repeated BattleUser users = 2; // 玩家
+	required int32 lordIndex = 3; // 地主索引
+	required int32 times = 4; // 倍数
+	repeated Card cards = 5; // 底牌(3张)
+}
+
+/**
 //
-message CSEnterWorld {
-	optional string gateway             = 99[default="to=world|url=auto"];
+message CS {
+	optional string gateway             = 1[default="to=|url=auto"];
 }
 
-message SCEnterWorld {
-	optional string gateway             = 99[default="to=client|url=set"];
+message SC {
+	optional string gateway             = 1[default="to=client"];
 }
+*/
+
+
+
+
+

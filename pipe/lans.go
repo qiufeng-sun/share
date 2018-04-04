@@ -3,7 +3,6 @@ package pipe
 import (
 	"github.com/golang/protobuf/proto"
 
-	"util/etcd"
 	"util/logs"
 	"util/run"
 
@@ -13,7 +12,6 @@ import (
 	"core/net/lan/pipe"
 
 	"share/handler"
-	"share/msg"
 )
 
 var _ = logs.Debug
@@ -28,21 +26,23 @@ var (
 const x_chanMsg_procNum = 10    // 处理goroutine数
 const x_chanMsg_cacheNum = 1000 // chan中缓存数据量
 
+//
+type fAddrsUpdater func(svc string, svcAddrs []string)
+
 // 服务器间相关处理
-func Init(lanCfg *lan.LanCfg, etcdCfg *etcd.SrvCfg, handle func(*pb.PbFrame)) {
+func Init(lanCfg *lan.LanCfg, handle func(*pb.PbFrame)) fAddrsUpdater {
 	// init
 	g_lan = pipe.NewLan(lanCfg)
 	g_chMsg = make(chan *pb.PbFrame, x_chanMsg_cacheNum)
 	g_handle = handle
-
-	// reg and watch
-	etcd.RegAndWatchs(lanCfg.Name, etcdCfg, g_lan.Update)
 
 	// recv msg
 	go run.Exec(true, recvMsg)
 
 	// proc msg
 	procMsg()
+
+	return g_lan.Clients.Update
 }
 
 // recv server msg and send it to channel
@@ -55,7 +55,7 @@ func recvMsg() {
 
 		f := &pb.PbFrame{}
 		if e := proto.Unmarshal(raw, f); e != nil {
-			logs.Panicln(e)
+			logs.Error("recv msg failed! error:%v", e)
 		}
 
 		select {
@@ -68,23 +68,37 @@ func recvMsg() {
 }
 
 //
-func NoticeTooBusy(f *pb.PbFrame) {
-	//
-	dstUrl := f.GetSrcUrl()
+func NoticeTooBusy(f *pb.PbFrame) { // to do
+	logs.Error("too many msg to be proc! lan:%v", g_lan.Server.LanCfg)
 
-	// message
-	nf := &pb.PbFrame{
-		SrcUrl:  proto.String(f.GetDstUrls()[0]),
-		DstUrls: []string{dstUrl},
-		MsgRaw:  nil, // to do too busy
-	}
-	SendFrame2Server(dstUrl, nf)
+	//	//
+	//	dstUrl := f.GetSrcUrl()
+
+	//	// message
+	//	nf := &pb.PbFrame{
+	//		SrcUrl:  proto.String(f.GetDstUrls()[0]),
+	//		DstUrls: []string{dstUrl},
+	//		MsgRaw:  nil, // to do too busy
+	//	}
+	//	SendFrame2Server(dstUrl, nf)
 }
 
 //
-func SendMsg(accId int64, srcUrl, dstUrl string, msgId msg.EMsg, m proto.Message) {
+func SendMsg(accId int64, srcUrl, dstUrl string, msgId int32, m proto.Message) {
 	//
-	raw, e := handler.PackMsg(int32(msgId), m)
+	sendMsg(accId, srcUrl, dstUrl, msgId, false, m)
+}
+
+//
+func SendInnerMsg(accId int64, srcUrl, dstUrl string, msgId int32, m proto.Message) {
+	//
+	sendMsg(accId, srcUrl, dstUrl, msgId, true, m)
+}
+
+//
+func sendMsg(accId int64, srcUrl, dstUrl string, msgId int32, inner bool, m proto.Message) {
+	//
+	raw, e := handler.PackMsg(msgId, m)
 	if e != nil {
 		logs.Error("pack msg failed! srcUrl:%v, dstUrl:%v, accId:%v, msgId:%v, msg:%+v",
 			srcUrl, dstUrl, accId, msgId, m)
@@ -97,6 +111,7 @@ func SendMsg(accId int64, srcUrl, dstUrl string, msgId msg.EMsg, m proto.Message
 		DstUrls: []string{dstUrl},
 		AccId:   proto.Int64(accId),
 		MsgRaw:  raw,
+		Inner:   &inner,
 	}
 	SendFrame2Server(dstUrl, nb)
 }
@@ -140,7 +155,7 @@ func procMsg() {
 
 //
 func SrvUrl() string {
-	return g_lan.SrvUrl
+	return g_lan.Server.SrvUrl
 }
 
 //
@@ -149,5 +164,5 @@ func SelectRandUrl(srv string) string {
 	if "" == srvId {
 		return ""
 	}
-	return net.GenUrl(srvId, "0")
+	return net.ServerUrl(srvId)
 }

@@ -2,23 +2,6 @@
 // source: msg.proto
 // DO NOT EDIT!
 
-/*
-Package msg is a generated protocol buffer package.
-
-It is generated from these files:
-	msg.proto
-	user.proto
-
-It has these top-level messages:
-	SCSysBusy
-	SCKick
-	CSLogin
-	SCLogin
-	CSEnterWorld
-	SCEnterWorld
-	LoadUserReq
-	LoadUserResp
-*/
 package msg
 
 import proto "github.com/golang/protobuf/proto"
@@ -30,36 +13,69 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
-
-// msgid
+// msgid(1000以内为服务器内部消息)
 type EMsg int32
 
 const (
-	EMsg_ID_SCSysBusy    EMsg = 2
-	EMsg_ID_CSLogin      EMsg = 1001
-	EMsg_ID_SCLogin      EMsg = 1002
-	EMsg_ID_CSEnterWorld EMsg = 2001
-	EMsg_ID_SCEnterWorld EMsg = 2002
+	EMsg_ID_SCSysBusy      EMsg = 1002
+	EMsg_ID_SCKick         EMsg = 1004
+	EMsg_ID_CSLogin        EMsg = 1101
+	EMsg_ID_SCLogin        EMsg = 1102
+	EMsg_ID_CSLoadInfo     EMsg = 1201
+	EMsg_ID_SCLoadInfo     EMsg = 1202
+	EMsg_ID_CSMatchDz      EMsg = 2011
+	EMsg_ID_SCMatchDz      EMsg = 2012
+	EMsg_ID_SCDealDz       EMsg = 2014
+	EMsg_ID_CSBidDz        EMsg = 2015
+	EMsg_ID_SCBidDz        EMsg = 2016
+	EMsg_ID_SCExtraCardsDz EMsg = 2018
+	EMsg_ID_CSDiscardDz    EMsg = 2021
+	EMsg_ID_SCDiscardDz    EMsg = 2022
+	EMsg_ID_SCGameOverDz   EMsg = 2024
+	EMsg_ID_CSQuitAutoDz   EMsg = 2025
+	EMsg_ID_SCAutoDz       EMsg = 2026
+	EMsg_ID_SCFullDataDz   EMsg = 2028
 )
 
 var EMsg_name = map[int32]string{
-	2:    "ID_SCSysBusy",
-	1001: "ID_CSLogin",
-	1002: "ID_SCLogin",
-	2001: "ID_CSEnterWorld",
-	2002: "ID_SCEnterWorld",
+	1002: "ID_SCSysBusy",
+	1004: "ID_SCKick",
+	1101: "ID_CSLogin",
+	1102: "ID_SCLogin",
+	1201: "ID_CSLoadInfo",
+	1202: "ID_SCLoadInfo",
+	2011: "ID_CSMatchDz",
+	2012: "ID_SCMatchDz",
+	2014: "ID_SCDealDz",
+	2015: "ID_CSBidDz",
+	2016: "ID_SCBidDz",
+	2018: "ID_SCExtraCardsDz",
+	2021: "ID_CSDiscardDz",
+	2022: "ID_SCDiscardDz",
+	2024: "ID_SCGameOverDz",
+	2025: "ID_CSQuitAutoDz",
+	2026: "ID_SCAutoDz",
+	2028: "ID_SCFullDataDz",
 }
 var EMsg_value = map[string]int32{
-	"ID_SCSysBusy":    2,
-	"ID_CSLogin":      1001,
-	"ID_SCLogin":      1002,
-	"ID_CSEnterWorld": 2001,
-	"ID_SCEnterWorld": 2002,
+	"ID_SCSysBusy":      1002,
+	"ID_SCKick":         1004,
+	"ID_CSLogin":        1101,
+	"ID_SCLogin":        1102,
+	"ID_CSLoadInfo":     1201,
+	"ID_SCLoadInfo":     1202,
+	"ID_CSMatchDz":      2011,
+	"ID_SCMatchDz":      2012,
+	"ID_SCDealDz":       2014,
+	"ID_CSBidDz":        2015,
+	"ID_SCBidDz":        2016,
+	"ID_SCExtraCardsDz": 2018,
+	"ID_CSDiscardDz":    2021,
+	"ID_SCDiscardDz":    2022,
+	"ID_SCGameOverDz":   2024,
+	"ID_CSQuitAutoDz":   2025,
+	"ID_SCAutoDz":       2026,
+	"ID_SCFullDataDz":   2028,
 }
 
 func (x EMsg) Enum() *EMsg {
@@ -78,19 +94,19 @@ func (x *EMsg) UnmarshalJSON(data []byte) error {
 	*x = EMsg(value)
 	return nil
 }
-func (EMsg) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (EMsg) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
 //
 type SCSysBusy struct {
-	Gateway          *string `protobuf:"bytes,99,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
-	SrvType          *int32  `protobuf:"varint,1,req,name=SrvType" json:"SrvType,omitempty"`
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
+	SrvType          *int32  `protobuf:"varint,2,req,name=srvType" json:"srvType,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *SCSysBusy) Reset()                    { *m = SCSysBusy{} }
 func (m *SCSysBusy) String() string            { return proto.CompactTextString(m) }
 func (*SCSysBusy) ProtoMessage()               {}
-func (*SCSysBusy) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (*SCSysBusy) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
 const Default_SCSysBusy_Gateway string = "to=client"
 
@@ -110,15 +126,15 @@ func (m *SCSysBusy) GetSrvType() int32 {
 
 //
 type SCKick struct {
-	Gateway          *string `protobuf:"bytes,99,opt,name=gateway,def=to=kick" json:"gateway,omitempty"`
-	Code             *int32  `protobuf:"varint,1,opt,name=code" json:"code,omitempty"`
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=kick" json:"gateway,omitempty"`
+	Code             *int32  `protobuf:"varint,2,opt,name=code" json:"code,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *SCKick) Reset()                    { *m = SCKick{} }
 func (m *SCKick) String() string            { return proto.CompactTextString(m) }
 func (*SCKick) ProtoMessage()               {}
-func (*SCKick) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (*SCKick) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
 
 const Default_SCKick_Gateway string = "to=kick"
 
@@ -138,14 +154,16 @@ func (m *SCKick) GetCode() int32 {
 
 //
 type CSLogin struct {
-	Gateway          *string `protobuf:"bytes,99,opt,name=gateway,def=to=logon" json:"gateway,omitempty"`
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=logon" json:"gateway,omitempty"`
+	Type             *int32  `protobuf:"varint,2,opt,name=type" json:"type,omitempty"`
+	Token            *string `protobuf:"bytes,3,opt,name=token" json:"token,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *CSLogin) Reset()                    { *m = CSLogin{} }
 func (m *CSLogin) String() string            { return proto.CompactTextString(m) }
 func (*CSLogin) ProtoMessage()               {}
-func (*CSLogin) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (*CSLogin) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{2} }
 
 const Default_CSLogin_Gateway string = "to=logon"
 
@@ -156,17 +174,31 @@ func (m *CSLogin) GetGateway() string {
 	return Default_CSLogin_Gateway
 }
 
+func (m *CSLogin) GetType() int32 {
+	if m != nil && m.Type != nil {
+		return *m.Type
+	}
+	return 0
+}
+
+func (m *CSLogin) GetToken() string {
+	if m != nil && m.Token != nil {
+		return *m.Token
+	}
+	return ""
+}
+
 type SCLogin struct {
-	Gateway          *string `protobuf:"bytes,99,opt,name=gateway,def=to=client|accId=" json:"gateway,omitempty"`
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client|accId=set" json:"gateway,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *SCLogin) Reset()                    { *m = SCLogin{} }
 func (m *SCLogin) String() string            { return proto.CompactTextString(m) }
 func (*SCLogin) ProtoMessage()               {}
-func (*SCLogin) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (*SCLogin) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{3} }
 
-const Default_SCLogin_Gateway string = "to=client|accId="
+const Default_SCLogin_Gateway string = "to=client|accId=set"
 
 func (m *SCLogin) GetGateway() string {
 	if m != nil && m.Gateway != nil {
@@ -175,43 +207,480 @@ func (m *SCLogin) GetGateway() string {
 	return Default_SCLogin_Gateway
 }
 
-//
-type CSEnterWorld struct {
-	Gateway          *string `protobuf:"bytes,99,opt,name=gateway,def=to=world|url=auto" json:"gateway,omitempty"`
+// 拉取玩家信息及大厅信息// to do
+type CSLoadInfo struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=hall" json:"gateway,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CSEnterWorld) Reset()                    { *m = CSEnterWorld{} }
-func (m *CSEnterWorld) String() string            { return proto.CompactTextString(m) }
-func (*CSEnterWorld) ProtoMessage()               {}
-func (*CSEnterWorld) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *CSLoadInfo) Reset()                    { *m = CSLoadInfo{} }
+func (m *CSLoadInfo) String() string            { return proto.CompactTextString(m) }
+func (*CSLoadInfo) ProtoMessage()               {}
+func (*CSLoadInfo) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{4} }
 
-const Default_CSEnterWorld_Gateway string = "to=world|url=auto"
+const Default_CSLoadInfo_Gateway string = "to=hall"
 
-func (m *CSEnterWorld) GetGateway() string {
+func (m *CSLoadInfo) GetGateway() string {
 	if m != nil && m.Gateway != nil {
 		return *m.Gateway
 	}
-	return Default_CSEnterWorld_Gateway
+	return Default_CSLoadInfo_Gateway
 }
 
-type SCEnterWorld struct {
-	Gateway          *string `protobuf:"bytes,99,opt,name=gateway,def=to=client|url=set" json:"gateway,omitempty"`
+type SCLoadInfo struct {
+	Gateway          *string   `protobuf:"bytes,1,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
+	UserInfo         *UserInfo `protobuf:"bytes,2,opt,name=userInfo" json:"userInfo,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
+}
+
+func (m *SCLoadInfo) Reset()                    { *m = SCLoadInfo{} }
+func (m *SCLoadInfo) String() string            { return proto.CompactTextString(m) }
+func (*SCLoadInfo) ProtoMessage()               {}
+func (*SCLoadInfo) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{5} }
+
+const Default_SCLoadInfo_Gateway string = "to=client"
+
+func (m *SCLoadInfo) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCLoadInfo_Gateway
+}
+
+func (m *SCLoadInfo) GetUserInfo() *UserInfo {
+	if m != nil {
+		return m.UserInfo
+	}
+	return nil
+}
+
+// 匹配
+type CSMatchDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=doudz-hall|url=rand" json:"gateway,omitempty"`
+	RoomId           *int32  `protobuf:"varint,2,req,name=roomId" json:"roomId,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *SCEnterWorld) Reset()                    { *m = SCEnterWorld{} }
-func (m *SCEnterWorld) String() string            { return proto.CompactTextString(m) }
-func (*SCEnterWorld) ProtoMessage()               {}
-func (*SCEnterWorld) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *CSMatchDz) Reset()                    { *m = CSMatchDz{} }
+func (m *CSMatchDz) String() string            { return proto.CompactTextString(m) }
+func (*CSMatchDz) ProtoMessage()               {}
+func (*CSMatchDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{6} }
 
-const Default_SCEnterWorld_Gateway string = "to=client|url=set"
+const Default_CSMatchDz_Gateway string = "to=doudz-hall|url=rand"
 
-func (m *SCEnterWorld) GetGateway() string {
+func (m *CSMatchDz) GetGateway() string {
 	if m != nil && m.Gateway != nil {
 		return *m.Gateway
 	}
-	return Default_SCEnterWorld_Gateway
+	return Default_CSMatchDz_Gateway
+}
+
+func (m *CSMatchDz) GetRoomId() int32 {
+	if m != nil && m.RoomId != nil {
+		return *m.RoomId
+	}
+	return 0
+}
+
+type SCMatchDz struct {
+	Gateway          *string       `protobuf:"bytes,1,opt,name=gateway,def=to=client|url=set" json:"gateway,omitempty"`
+	Users            []*BattleUser `protobuf:"bytes,2,rep,name=users" json:"users,omitempty"`
+	Index            *int32        `protobuf:"varint,3,req,name=index" json:"index,omitempty"`
+	BaseCurrency     *int32        `protobuf:"varint,4,req,name=baseCurrency" json:"baseCurrency,omitempty"`
+	RoomId           *int32        `protobuf:"varint,5,req,name=roomId" json:"roomId,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
+}
+
+func (m *SCMatchDz) Reset()                    { *m = SCMatchDz{} }
+func (m *SCMatchDz) String() string            { return proto.CompactTextString(m) }
+func (*SCMatchDz) ProtoMessage()               {}
+func (*SCMatchDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{7} }
+
+const Default_SCMatchDz_Gateway string = "to=client|url=set"
+
+func (m *SCMatchDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCMatchDz_Gateway
+}
+
+func (m *SCMatchDz) GetUsers() []*BattleUser {
+	if m != nil {
+		return m.Users
+	}
+	return nil
+}
+
+func (m *SCMatchDz) GetIndex() int32 {
+	if m != nil && m.Index != nil {
+		return *m.Index
+	}
+	return 0
+}
+
+func (m *SCMatchDz) GetBaseCurrency() int32 {
+	if m != nil && m.BaseCurrency != nil {
+		return *m.BaseCurrency
+	}
+	return 0
+}
+
+func (m *SCMatchDz) GetRoomId() int32 {
+	if m != nil && m.RoomId != nil {
+		return *m.RoomId
+	}
+	return 0
+}
+
+// 发牌
+type SCDealDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
+	Cards            []*Card `protobuf:"bytes,2,rep,name=cards" json:"cards,omitempty"`
+	Index            *int32  `protobuf:"varint,3,req,name=index" json:"index,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *SCDealDz) Reset()                    { *m = SCDealDz{} }
+func (m *SCDealDz) String() string            { return proto.CompactTextString(m) }
+func (*SCDealDz) ProtoMessage()               {}
+func (*SCDealDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{8} }
+
+const Default_SCDealDz_Gateway string = "to=client"
+
+func (m *SCDealDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCDealDz_Gateway
+}
+
+func (m *SCDealDz) GetCards() []*Card {
+	if m != nil {
+		return m.Cards
+	}
+	return nil
+}
+
+func (m *SCDealDz) GetIndex() int32 {
+	if m != nil && m.Index != nil {
+		return *m.Index
+	}
+	return 0
+}
+
+// 叫地主(抢地主)
+type CSBidDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=doudz-room|url=fix" json:"gateway,omitempty"`
+	Times            *int32  `protobuf:"varint,2,req,name=times" json:"times,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *CSBidDz) Reset()                    { *m = CSBidDz{} }
+func (m *CSBidDz) String() string            { return proto.CompactTextString(m) }
+func (*CSBidDz) ProtoMessage()               {}
+func (*CSBidDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{9} }
+
+const Default_CSBidDz_Gateway string = "to=doudz-room|url=fix"
+
+func (m *CSBidDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_CSBidDz_Gateway
+}
+
+func (m *CSBidDz) GetTimes() int32 {
+	if m != nil && m.Times != nil {
+		return *m.Times
+	}
+	return 0
+}
+
+type SCBidDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
+	Index            *int32  `protobuf:"varint,2,req,name=index" json:"index,omitempty"`
+	Times            *int32  `protobuf:"varint,3,req,name=times" json:"times,omitempty"`
+	Next             *int32  `protobuf:"varint,4,opt,name=next,def=-1" json:"next,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *SCBidDz) Reset()                    { *m = SCBidDz{} }
+func (m *SCBidDz) String() string            { return proto.CompactTextString(m) }
+func (*SCBidDz) ProtoMessage()               {}
+func (*SCBidDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{10} }
+
+const Default_SCBidDz_Gateway string = "to=client"
+const Default_SCBidDz_Next int32 = -1
+
+func (m *SCBidDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCBidDz_Gateway
+}
+
+func (m *SCBidDz) GetIndex() int32 {
+	if m != nil && m.Index != nil {
+		return *m.Index
+	}
+	return 0
+}
+
+func (m *SCBidDz) GetTimes() int32 {
+	if m != nil && m.Times != nil {
+		return *m.Times
+	}
+	return 0
+}
+
+func (m *SCBidDz) GetNext() int32 {
+	if m != nil && m.Next != nil {
+		return *m.Next
+	}
+	return Default_SCBidDz_Next
+}
+
+// 亮底牌
+type SCExtraCardsDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
+	Cards            []*Card `protobuf:"bytes,2,rep,name=cards" json:"cards,omitempty"`
+	Index            *int32  `protobuf:"varint,3,req,name=index" json:"index,omitempty"`
+	Times            *int32  `protobuf:"varint,4,req,name=times" json:"times,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *SCExtraCardsDz) Reset()                    { *m = SCExtraCardsDz{} }
+func (m *SCExtraCardsDz) String() string            { return proto.CompactTextString(m) }
+func (*SCExtraCardsDz) ProtoMessage()               {}
+func (*SCExtraCardsDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{11} }
+
+const Default_SCExtraCardsDz_Gateway string = "to=client"
+
+func (m *SCExtraCardsDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCExtraCardsDz_Gateway
+}
+
+func (m *SCExtraCardsDz) GetCards() []*Card {
+	if m != nil {
+		return m.Cards
+	}
+	return nil
+}
+
+func (m *SCExtraCardsDz) GetIndex() int32 {
+	if m != nil && m.Index != nil {
+		return *m.Index
+	}
+	return 0
+}
+
+func (m *SCExtraCardsDz) GetTimes() int32 {
+	if m != nil && m.Times != nil {
+		return *m.Times
+	}
+	return 0
+}
+
+// 打牌
+type CSDiscardDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=doudz-room|url=fix" json:"gateway,omitempty"`
+	Cards            []*Card `protobuf:"bytes,2,rep,name=cards" json:"cards,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *CSDiscardDz) Reset()                    { *m = CSDiscardDz{} }
+func (m *CSDiscardDz) String() string            { return proto.CompactTextString(m) }
+func (*CSDiscardDz) ProtoMessage()               {}
+func (*CSDiscardDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{12} }
+
+const Default_CSDiscardDz_Gateway string = "to=doudz-room|url=fix"
+
+func (m *CSDiscardDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_CSDiscardDz_Gateway
+}
+
+func (m *CSDiscardDz) GetCards() []*Card {
+	if m != nil {
+		return m.Cards
+	}
+	return nil
+}
+
+type SCDiscardDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
+	Cards            []*Card `protobuf:"bytes,2,rep,name=cards" json:"cards,omitempty"`
+	Index            *int32  `protobuf:"varint,3,req,name=index" json:"index,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *SCDiscardDz) Reset()                    { *m = SCDiscardDz{} }
+func (m *SCDiscardDz) String() string            { return proto.CompactTextString(m) }
+func (*SCDiscardDz) ProtoMessage()               {}
+func (*SCDiscardDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{13} }
+
+const Default_SCDiscardDz_Gateway string = "to=client"
+
+func (m *SCDiscardDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCDiscardDz_Gateway
+}
+
+func (m *SCDiscardDz) GetCards() []*Card {
+	if m != nil {
+		return m.Cards
+	}
+	return nil
+}
+
+func (m *SCDiscardDz) GetIndex() int32 {
+	if m != nil && m.Index != nil {
+		return *m.Index
+	}
+	return 0
+}
+
+// 结算//??
+type SCGameOverDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client|url=del" json:"gateway,omitempty"`
+	WinIndex         *int32  `protobuf:"varint,2,req,name=winIndex" json:"winIndex,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *SCGameOverDz) Reset()                    { *m = SCGameOverDz{} }
+func (m *SCGameOverDz) String() string            { return proto.CompactTextString(m) }
+func (*SCGameOverDz) ProtoMessage()               {}
+func (*SCGameOverDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{14} }
+
+const Default_SCGameOverDz_Gateway string = "to=client|url=del"
+
+func (m *SCGameOverDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCGameOverDz_Gateway
+}
+
+func (m *SCGameOverDz) GetWinIndex() int32 {
+	if m != nil && m.WinIndex != nil {
+		return *m.WinIndex
+	}
+	return 0
+}
+
+// 取消托管
+type CSQuitAutoDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=doudz-room|url=fix" json:"gateway,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *CSQuitAutoDz) Reset()                    { *m = CSQuitAutoDz{} }
+func (m *CSQuitAutoDz) String() string            { return proto.CompactTextString(m) }
+func (*CSQuitAutoDz) ProtoMessage()               {}
+func (*CSQuitAutoDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{15} }
+
+const Default_CSQuitAutoDz_Gateway string = "to=doudz-room|url=fix"
+
+func (m *CSQuitAutoDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_CSQuitAutoDz_Gateway
+}
+
+type SCAutoDz struct {
+	Gateway          *string `protobuf:"bytes,1,opt,name=gateway,def=to=client" json:"gateway,omitempty"`
+	Auto             *bool   `protobuf:"varint,2,opt,name=auto" json:"auto,omitempty"`
+	Index            *int32  `protobuf:"varint,3,opt,name=index" json:"index,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *SCAutoDz) Reset()                    { *m = SCAutoDz{} }
+func (m *SCAutoDz) String() string            { return proto.CompactTextString(m) }
+func (*SCAutoDz) ProtoMessage()               {}
+func (*SCAutoDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{16} }
+
+const Default_SCAutoDz_Gateway string = "to=client"
+
+func (m *SCAutoDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCAutoDz_Gateway
+}
+
+func (m *SCAutoDz) GetAuto() bool {
+	if m != nil && m.Auto != nil {
+		return *m.Auto
+	}
+	return false
+}
+
+func (m *SCAutoDz) GetIndex() int32 {
+	if m != nil && m.Index != nil {
+		return *m.Index
+	}
+	return 0
+}
+
+// 断线重连
+type SCFullDataDz struct {
+	Gateway          *string       `protobuf:"bytes,1,opt,name=gateway,def=to=client|url=set" json:"gateway,omitempty"`
+	Users            []*BattleUser `protobuf:"bytes,2,rep,name=users" json:"users,omitempty"`
+	LordIndex        *int32        `protobuf:"varint,3,req,name=lordIndex" json:"lordIndex,omitempty"`
+	Times            *int32        `protobuf:"varint,4,req,name=times" json:"times,omitempty"`
+	Cards            []*Card       `protobuf:"bytes,5,rep,name=cards" json:"cards,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
+}
+
+func (m *SCFullDataDz) Reset()                    { *m = SCFullDataDz{} }
+func (m *SCFullDataDz) String() string            { return proto.CompactTextString(m) }
+func (*SCFullDataDz) ProtoMessage()               {}
+func (*SCFullDataDz) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{17} }
+
+const Default_SCFullDataDz_Gateway string = "to=client|url=set"
+
+func (m *SCFullDataDz) GetGateway() string {
+	if m != nil && m.Gateway != nil {
+		return *m.Gateway
+	}
+	return Default_SCFullDataDz_Gateway
+}
+
+func (m *SCFullDataDz) GetUsers() []*BattleUser {
+	if m != nil {
+		return m.Users
+	}
+	return nil
+}
+
+func (m *SCFullDataDz) GetLordIndex() int32 {
+	if m != nil && m.LordIndex != nil {
+		return *m.LordIndex
+	}
+	return 0
+}
+
+func (m *SCFullDataDz) GetTimes() int32 {
+	if m != nil && m.Times != nil {
+		return *m.Times
+	}
+	return 0
+}
+
+func (m *SCFullDataDz) GetCards() []*Card {
+	if m != nil {
+		return m.Cards
+	}
+	return nil
 }
 
 func init() {
@@ -219,32 +688,76 @@ func init() {
 	proto.RegisterType((*SCKick)(nil), "msg.SCKick")
 	proto.RegisterType((*CSLogin)(nil), "msg.CSLogin")
 	proto.RegisterType((*SCLogin)(nil), "msg.SCLogin")
-	proto.RegisterType((*CSEnterWorld)(nil), "msg.CSEnterWorld")
-	proto.RegisterType((*SCEnterWorld)(nil), "msg.SCEnterWorld")
+	proto.RegisterType((*CSLoadInfo)(nil), "msg.CSLoadInfo")
+	proto.RegisterType((*SCLoadInfo)(nil), "msg.SCLoadInfo")
+	proto.RegisterType((*CSMatchDz)(nil), "msg.CSMatchDz")
+	proto.RegisterType((*SCMatchDz)(nil), "msg.SCMatchDz")
+	proto.RegisterType((*SCDealDz)(nil), "msg.SCDealDz")
+	proto.RegisterType((*CSBidDz)(nil), "msg.CSBidDz")
+	proto.RegisterType((*SCBidDz)(nil), "msg.SCBidDz")
+	proto.RegisterType((*SCExtraCardsDz)(nil), "msg.SCExtraCardsDz")
+	proto.RegisterType((*CSDiscardDz)(nil), "msg.CSDiscardDz")
+	proto.RegisterType((*SCDiscardDz)(nil), "msg.SCDiscardDz")
+	proto.RegisterType((*SCGameOverDz)(nil), "msg.SCGameOverDz")
+	proto.RegisterType((*CSQuitAutoDz)(nil), "msg.CSQuitAutoDz")
+	proto.RegisterType((*SCAutoDz)(nil), "msg.SCAutoDz")
+	proto.RegisterType((*SCFullDataDz)(nil), "msg.SCFullDataDz")
 	proto.RegisterEnum("msg.EMsg", EMsg_name, EMsg_value)
 }
 
-func init() { proto.RegisterFile("msg.proto", fileDescriptor0) }
+func init() { proto.RegisterFile("msg.proto", fileDescriptor1) }
 
-var fileDescriptor0 = []byte{
-	// 294 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x84, 0x90, 0xcd, 0x4a, 0xc3, 0x40,
-	0x10, 0x80, 0x69, 0x6d, 0x5d, 0x33, 0x14, 0xb2, 0x2e, 0x1e, 0x7a, 0xac, 0xf1, 0x52, 0x2a, 0x7a,
-	0xf3, 0xa2, 0x2c, 0x82, 0xdb, 0x1e, 0xea, 0xcf, 0xa5, 0x2b, 0x78, 0x2c, 0x61, 0x13, 0x97, 0x90,
-	0x34, 0x53, 0xb2, 0x1b, 0x4b, 0xa0, 0x2f, 0xa9, 0x6f, 0xa1, 0x4f, 0x21, 0xa9, 0x69, 0xa2, 0xb9,
-	0x78, 0xdb, 0x9d, 0x99, 0xef, 0x9b, 0x1f, 0x70, 0x56, 0x46, 0x5f, 0xae, 0x33, 0xb4, 0xc8, 0x0e,
-	0x56, 0x46, 0x7b, 0xf7, 0xe0, 0x48, 0x21, 0x0b, 0x73, 0x97, 0x9b, 0x82, 0x9d, 0x01, 0xd1, 0xbe,
-	0x0d, 0x37, 0x7e, 0x31, 0x54, 0xa3, 0xce, 0xd8, 0xb9, 0x76, 0x2c, 0x72, 0x95, 0x44, 0x61, 0x6a,
-	0x17, 0xfb, 0x0c, 0x1b, 0x02, 0x91, 0xd9, 0xdb, 0x73, 0xb1, 0x0e, 0x87, 0x9d, 0x51, 0x77, 0xdc,
-	0x5f, 0xec, 0xbf, 0xde, 0x2d, 0x1c, 0x4a, 0xf1, 0x10, 0xa9, 0x98, 0x9d, 0xb6, 0x45, 0xc4, 0x22,
-	0x8f, 0x23, 0x15, 0x37, 0x1a, 0x06, 0x3d, 0x85, 0x41, 0xe9, 0xe8, 0x8c, 0xfb, 0x8b, 0xdd, 0xdb,
-	0xbb, 0x00, 0x22, 0xe4, 0x23, 0xea, 0x28, 0x65, 0x5e, 0xdb, 0x70, 0x64, 0x91, 0x27, 0xa8, 0x31,
-	0xad, 0x15, 0xde, 0x15, 0x10, 0x29, 0x7e, 0xca, 0x27, 0xed, 0x72, 0x5a, 0x4f, 0xbe, 0xf5, 0x95,
-	0x9a, 0x07, 0xbc, 0xc1, 0x6e, 0x60, 0x20, 0xe4, 0x2c, 0xb5, 0x61, 0xf6, 0x82, 0x59, 0x12, 0xb0,
-	0xf3, 0x36, 0x7b, 0x6c, 0x91, 0x6f, 0xca, 0xd4, 0x36, 0xcf, 0x12, 0xee, 0xe7, 0x16, 0xff, 0xc0,
-	0x52, 0xfc, 0x07, 0x57, 0x8d, 0x4b, 0xda, 0x84, 0xcd, 0xe9, 0x26, 0xaf, 0xd0, 0x9b, 0x3d, 0x19,
-	0xcd, 0x28, 0x0c, 0xe6, 0xd3, 0x65, 0x7d, 0x77, 0xda, 0x65, 0x2e, 0xc0, 0x7c, 0xba, 0xac, 0x96,
-	0xa7, 0x9f, 0xa4, 0x0a, 0x54, 0xeb, 0xd1, 0x2f, 0xc2, 0x4e, 0xc0, 0xdd, 0x55, 0x34, 0xbd, 0xe9,
-	0xbb, 0x5b, 0x45, 0x7f, 0x4f, 0x44, 0x3f, 0xdc, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0x45, 0x50,
-	0x42, 0xc0, 0xe5, 0x01, 0x00, 0x00,
+var fileDescriptor1 = []byte{
+	// 806 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xb4, 0x55, 0x6d, 0x6b, 0xec, 0x44,
+	0x14, 0x66, 0xdf, 0xee, 0x6e, 0xce, 0xee, 0x6d, 0xa6, 0x73, 0xaf, 0x4b, 0x28, 0x82, 0x35, 0x22,
+	0xac, 0x4a, 0x5b, 0xed, 0x27, 0x29, 0x2c, 0xc5, 0x26, 0x55, 0x56, 0x2d, 0x6a, 0x62, 0x29, 0x82,
+	0x50, 0xc6, 0x64, 0x76, 0x1b, 0x36, 0x9b, 0x29, 0xc9, 0xa4, 0xdd, 0x5d, 0xfa, 0xc9, 0x7f, 0x54,
+	0xbf, 0xf8, 0x2b, 0xf4, 0x0f, 0x28, 0x2a, 0x8a, 0xa2, 0xa5, 0x3f, 0x42, 0x66, 0x92, 0xcd, 0xa4,
+	0xcb, 0xc2, 0x5d, 0x0a, 0xfd, 0x96, 0x79, 0x26, 0xe7, 0x39, 0xcf, 0x79, 0xe6, 0xcc, 0x19, 0xd0,
+	0x26, 0xc9, 0x68, 0xf7, 0x32, 0x66, 0x9c, 0xe1, 0xda, 0x24, 0x19, 0x6d, 0x41, 0x10, 0x0d, 0x59,
+	0x06, 0x98, 0x9f, 0x82, 0xe6, 0x5a, 0xee, 0x2c, 0x39, 0x4a, 0x93, 0x19, 0x7e, 0x0b, 0x9a, 0x23,
+	0xc2, 0xe9, 0x35, 0x99, 0x19, 0x95, 0xed, 0x4a, 0x4f, 0x3b, 0xd0, 0x38, 0xeb, 0x7b, 0x61, 0x40,
+	0x23, 0xee, 0x2c, 0x76, 0xb0, 0x01, 0xcd, 0x24, 0xbe, 0xfa, 0x7a, 0x76, 0x49, 0x8d, 0xea, 0x76,
+	0xb5, 0xd7, 0x70, 0x16, 0x4b, 0xf3, 0x10, 0x9e, 0xb9, 0xd6, 0x67, 0x81, 0x37, 0xc6, 0x6f, 0x2e,
+	0x13, 0x35, 0x39, 0xeb, 0x8f, 0x03, 0x6f, 0xac, 0x68, 0x30, 0xd4, 0x3d, 0xe6, 0x0b, 0x8e, 0x4a,
+	0xaf, 0xe1, 0xc8, 0x6f, 0xf3, 0x0c, 0x9a, 0x96, 0xfb, 0x39, 0x1b, 0x05, 0x11, 0x36, 0x97, 0x19,
+	0x5a, 0x9c, 0xf5, 0x43, 0x36, 0x62, 0xd1, 0x03, 0x0a, 0x9e, 0xc9, 0x90, 0x14, 0xe2, 0x1b, 0xbf,
+	0x84, 0x06, 0x67, 0x63, 0x1a, 0x19, 0x35, 0x11, 0xe5, 0x64, 0x0b, 0xf3, 0x43, 0x68, 0xba, 0x56,
+	0x46, 0xbc, 0xb3, 0x4c, 0xfc, 0xa2, 0xa8, 0xf1, 0x86, 0x78, 0xde, 0xc0, 0xef, 0x27, 0x54, 0x55,
+	0x6b, 0xee, 0x01, 0x08, 0x49, 0xc4, 0x1f, 0x44, 0x43, 0xb6, 0xba, 0xae, 0x0b, 0x12, 0x86, 0x2a,
+	0xe0, 0x5b, 0x00, 0x91, 0x2a, 0x0f, 0x58, 0xcb, 0xd1, 0x77, 0xa0, 0x95, 0x26, 0x34, 0x16, 0x01,
+	0xb2, 0x96, 0xf6, 0xfe, 0xf3, 0x5d, 0x71, 0x64, 0xa7, 0x39, 0xe8, 0x14, 0xdb, 0xe6, 0x29, 0x68,
+	0x96, 0x7b, 0x42, 0xb8, 0x77, 0x61, 0xcf, 0xf1, 0xfb, 0xcb, 0xe4, 0x5d, 0xce, 0xfa, 0x3e, 0x4b,
+	0xfd, 0xf9, 0x8e, 0xd0, 0x74, 0x93, 0xc6, 0x61, 0x3f, 0x26, 0x91, 0xaf, 0x32, 0x75, 0xe1, 0x59,
+	0xcc, 0xd8, 0x64, 0xe0, 0xe7, 0x47, 0x97, 0xaf, 0xcc, 0xdb, 0x8a, 0x68, 0x83, 0x05, 0xef, 0x7b,
+	0xcb, 0xbc, 0x9b, 0xca, 0x22, 0xc1, 0x59, 0x36, 0x08, 0xbf, 0x0d, 0x0d, 0xa1, 0x2e, 0x31, 0xaa,
+	0xdb, 0xb5, 0x5e, 0x7b, 0x5f, 0x97, 0xca, 0x8f, 0x08, 0xe7, 0x21, 0x15, 0xfa, 0x9d, 0x6c, 0x57,
+	0x9c, 0x4b, 0x10, 0xf9, 0x74, 0x6a, 0xd4, 0x64, 0xe2, 0x6c, 0x81, 0x4d, 0xe8, 0x7c, 0x47, 0x12,
+	0x6a, 0xa5, 0x71, 0x4c, 0x23, 0x6f, 0x66, 0xd4, 0xe5, 0xe6, 0x03, 0xac, 0xa4, 0xb9, 0xf1, 0x40,
+	0xf3, 0x10, 0x5a, 0xae, 0x65, 0x53, 0x12, 0xda, 0xf3, 0xf5, 0x6c, 0x7e, 0x03, 0x1a, 0x1e, 0x89,
+	0xfd, 0x85, 0x52, 0x4d, 0x2a, 0xb5, 0x48, 0xec, 0x3b, 0x19, 0xbe, 0x5a, 0xa3, 0xf9, 0xa5, 0x68,
+	0xca, 0xa3, 0xc0, 0xb7, 0xe7, 0x78, 0x6f, 0x39, 0xcd, 0x6b, 0x85, 0xe1, 0x42, 0x94, 0x34, 0x67,
+	0x18, 0x4c, 0x55, 0x4a, 0xd1, 0x8d, 0xc1, 0x84, 0x26, 0xb9, 0xdd, 0xd9, 0xc2, 0x8c, 0x45, 0x37,
+	0x66, 0x8c, 0x6b, 0x09, 0x2f, 0x74, 0x55, 0xcb, 0xde, 0x15, 0xdc, 0xb5, 0x12, 0x37, 0xee, 0x42,
+	0x3d, 0xa2, 0x53, 0x6e, 0xd4, 0xc5, 0x9d, 0x38, 0xa8, 0xee, 0x7c, 0xe0, 0xc8, 0xb5, 0xf9, 0x7d,
+	0x05, 0x36, 0x5c, 0xeb, 0x78, 0xca, 0x63, 0x22, 0x4a, 0x4e, 0x9e, 0xd6, 0x34, 0x25, 0xae, 0x5e,
+	0x2e, 0xfc, 0x1c, 0xda, 0x96, 0x6b, 0x07, 0x89, 0x88, 0x7c, 0x8c, 0x9d, 0xaf, 0x12, 0x63, 0x06,
+	0xd0, 0x76, 0x2d, 0x95, 0xe0, 0x29, 0xdb, 0xe2, 0x0c, 0x3a, 0xae, 0xf5, 0x09, 0x99, 0xd0, 0x2f,
+	0xae, 0x68, 0xbc, 0xc6, 0xa5, 0xf1, 0xa9, 0x1a, 0x12, 0x78, 0x0b, 0x5a, 0xd7, 0x41, 0x34, 0x28,
+	0x1d, 0x6a, 0xb1, 0x36, 0x0f, 0xa1, 0x63, 0xb9, 0x5f, 0xa5, 0x01, 0xff, 0x28, 0xe5, 0xec, 0x11,
+	0x2e, 0x99, 0xdf, 0x88, 0x8b, 0x91, 0x07, 0xaf, 0xe5, 0x00, 0x86, 0x3a, 0x49, 0x79, 0x36, 0x7b,
+	0x5a, 0x8e, 0xfc, 0x2e, 0x17, 0x5d, 0x51, 0x45, 0xff, 0x58, 0x11, 0x55, 0x7f, 0x9c, 0x86, 0xa1,
+	0x4d, 0x38, 0x79, 0xa2, 0x51, 0xf1, 0x3a, 0x68, 0x21, 0x8b, 0xfd, 0x41, 0xc9, 0x73, 0x05, 0xac,
+	0xee, 0x2c, 0x75, 0x88, 0x8d, 0xd5, 0x87, 0xf8, 0xee, 0x5f, 0x55, 0xa8, 0x1f, 0x9f, 0x24, 0x23,
+	0xbc, 0x09, 0x9d, 0x81, 0x7d, 0x5e, 0xbc, 0x79, 0xe8, 0xae, 0x89, 0x37, 0x40, 0x93, 0x90, 0x78,
+	0xba, 0xd0, 0x7d, 0x13, 0xeb, 0x00, 0x03, 0xfb, 0x3c, 0x7f, 0x89, 0xd0, 0x4f, 0xad, 0x1c, 0xc8,
+	0x5f, 0x10, 0xf4, 0x73, 0x0b, 0x63, 0x78, 0x9e, 0xff, 0x91, 0xcd, 0x79, 0x74, 0xab, 0xe5, 0x98,
+	0x9a, 0xfd, 0xe8, 0x07, 0x2d, 0x4f, 0x56, 0x4c, 0x6c, 0xf4, 0x8b, 0x5e, 0xe4, 0x5f, 0x40, 0xbf,
+	0xea, 0x18, 0x41, 0x5b, 0x42, 0xd9, 0x30, 0x43, 0xbf, 0xe9, 0x85, 0x02, 0x39, 0x24, 0xd0, 0xef,
+	0x7a, 0xa1, 0x20, 0x03, 0xfe, 0xd0, 0x71, 0x17, 0x36, 0x25, 0x50, 0xbe, 0xd1, 0xe8, 0x4f, 0x1d,
+	0xbf, 0x80, 0x0d, 0x19, 0x59, 0x5c, 0x02, 0xf4, 0xf7, 0x02, 0x2c, 0xdd, 0x0c, 0xf4, 0x8f, 0x8e,
+	0x5f, 0x82, 0x2e, 0x41, 0xd5, 0xc3, 0xe8, 0xdf, 0x05, 0x5a, 0x6e, 0x40, 0xf4, 0x9f, 0x52, 0x98,
+	0x23, 0x77, 0x2a, 0x5a, 0xf5, 0x02, 0xba, 0xd7, 0xff, 0x0f, 0x00, 0x00, 0xff, 0xff, 0xa3, 0x38,
+	0x18, 0x93, 0x6a, 0x08, 0x00, 0x00,
 }

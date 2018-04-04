@@ -3,28 +3,20 @@ package rpc
 import (
 	"github.com/golang/protobuf/proto"
 
-	"util/logs"
-	"util/etcd"
-
 	"core/net/lan/rpc"
-
 	"share/handler"
+	"util/logs"
 )
 
-var _= logs.Debug
-
-//
-func NewClientPool(cfg *rpc.PoolConfig, etcdAddrs []string, etcdWatch string) *rpc.ClientPool {
-	pool := rpc.NewClientPool(cfg)
-	etcd.AddWatchs(etcdAddrs, []string{etcdWatch}, pool.Update)
-	return pool
-}
+var _ = logs.Debug
 
 //
 var g_clientPool *rpc.ClientPool
 
-func InitClient(cfg *rpc.PoolConfig, etcdAddrs []string, etcdWatch string) {
-	g_clientPool = NewClientPool(cfg, etcdAddrs, etcdWatch)
+func InitClient(cfg *rpc.PoolConfig) func(srv string, addrs []string) {
+	g_clientPool = rpc.NewClientPool(cfg)
+
+	return g_clientPool.Update
 }
 
 func GetClient() *rpc.Client {

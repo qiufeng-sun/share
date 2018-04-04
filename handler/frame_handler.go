@@ -23,22 +23,24 @@ func RegFunc(msgId int32, h func(*pb.PbFrame)) {
 	g_frameHandlers.RegHandler(msgId, hfunc(h))
 }
 
-func HandleFrame(f *pb.PbFrame) {
+func HandleFrame(f *pb.PbFrame) bool {
 	defer run.Recover(false)
 
 	//
 	id, ok := ParseMsgId(f.MsgRaw)
 	if !ok {
 		logs.Warnln("parse msg id failed!")
-		return
+		return false
 	}
 
 	h, info, ok := g_frameHandlers.Handler(id)
 	if !ok {
 		logs.Warn("not found msg handler! fromUrl:%v, msgId:%v", *f.SrcUrl, id)
-		return
+		return false
 	}
 
 	info.AddStats()
 	h.Handle(f, nil)
+
+	return true
 }

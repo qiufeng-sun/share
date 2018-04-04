@@ -46,7 +46,7 @@ func (x *EUserMsg) UnmarshalJSON(data []byte) error {
 	*x = EUserMsg(value)
 	return nil
 }
-func (EUserMsg) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+func (EUserMsg) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
 
 //
 type LoadUserReq struct {
@@ -57,7 +57,7 @@ type LoadUserReq struct {
 func (m *LoadUserReq) Reset()                    { *m = LoadUserReq{} }
 func (m *LoadUserReq) String() string            { return proto.CompactTextString(m) }
 func (*LoadUserReq) ProtoMessage()               {}
-func (*LoadUserReq) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+func (*LoadUserReq) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
 
 func (m *LoadUserReq) GetUserId() int64 {
 	if m != nil && m.UserId != nil {
@@ -75,7 +75,7 @@ type LoadUserResp struct {
 func (m *LoadUserResp) Reset()                    { *m = LoadUserResp{} }
 func (m *LoadUserResp) String() string            { return proto.CompactTextString(m) }
 func (*LoadUserResp) ProtoMessage()               {}
-func (*LoadUserResp) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
+func (*LoadUserResp) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
 
 func (m *LoadUserResp) GetUserId() int64 {
 	if m != nil && m.UserId != nil {
@@ -97,9 +97,9 @@ func init() {
 	proto.RegisterEnum("msg.EUserMsg", EUserMsg_name, EUserMsg_value)
 }
 
-func init() { proto.RegisterFile("user.proto", fileDescriptor1) }
+func init() { proto.RegisterFile("user.proto", fileDescriptor2) }
 
-var fileDescriptor1 = []byte{
+var fileDescriptor2 = []byte{
 	// 149 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x2a, 0x2d, 0x4e, 0x2d,
 	0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0xce, 0x2d, 0x4e, 0x57, 0x52, 0xe3, 0xe2, 0xf6,
